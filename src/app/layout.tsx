@@ -1,16 +1,20 @@
 import type { Metadata } from "next";
-import localFont from "next/font/local";
 import "./globals.css";
+import { cn } from "@/lib/utils";
+import { Zain, Afacad } from "next/font/google";
 
-const geistSans = localFont({
-  src: "./fonts/GeistVF.woff",
-  variable: "--font-geist-sans",
-  weight: "100 900",
+const zain = Zain({
+  subsets: ["latin"],
+  weight: ["700", "900"],
+  variable: '--font-zain',
+  display: 'swap',
 });
-const geistMono = localFont({
-  src: "./fonts/GeistMonoVF.woff",
-  variable: "--font-geist-mono",
-  weight: "100 900",
+
+const afacad = Afacad({
+  subsets: ["latin"],
+  weight: ["400", "500", "700"],
+  variable: '--font-afacad',
+  display: 'swap',
 });
 
 export const metadata: Metadata = {
@@ -20,14 +24,12 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   return (
-    <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
+    <html lang="en" className={cn(zain.variable, afacad.variable)}>
+      <body className="antialiased bg-neutral-50 font-sans">
         {children}
       </body>
     </html>
