@@ -17,7 +17,7 @@ export const BackButton = ({
             variant="link"
             size="sm"
             asChild
-            className="text-sm text-neutral-700 px-0 py-2 underline font-[300]"
+            className="text-sm text-neutral-700 px-0 py-2 underline font-[300] hover:text-neutral-900"
         >
             <Link href={href}>
                 {label}

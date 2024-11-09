@@ -4,7 +4,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { LoginSchema } from "@/schemas";
+import { SignUpSchema, SignUpValues } from "@/schemas";
 import * as z from "zod";
 import {
     Form,
@@ -16,29 +16,33 @@ import {
 } from "@/components/ui/form"
 import FormError from "@/components/form-error"
 import FormSuccess from "@/components/form-success"
-import { login } from "@/actions/login"
+import { signup } from "@/actions/signup"
 import { useTransition, useState } from "react"
 import { AuthLayout } from "@/components/auth/auth-layout";
+import Link from "next/link";
+import { cn } from "@/lib/utils";
+import { TermsCheckbox } from "@/components/auth/terms-checkbox";
 
-export default function LoginForm() {
+export default function SignUpForm() {
     const [error, setError] = useState<string | undefined>("");
     const [success, setSuccess] = useState<string | undefined>("");
     const [isPending, startTransition] = useTransition();
 
-    const form = useForm<z.infer<typeof LoginSchema>>({
-        resolver: zodResolver(LoginSchema),
+    const form = useForm<SignUpValues>({
+        resolver: zodResolver(SignUpSchema),
         defaultValues: {
             email: "",
-            password: ""
+            password: "",
+            terms: false
         }
     })
 
-    const onSubmit = (values: z.infer<typeof LoginSchema>) => {
+    const onSubmit = (values: SignUpValues) => {
         setError("");
         setSuccess("");
 
         startTransition(() => {
-            login(values)
+            signup(values)
                 .then((data) => {
                     setError(data.error);
                     setSuccess(data.success);
@@ -58,7 +62,7 @@ export default function LoginForm() {
                         name="email"
                         render={({ field, fieldState }) => (
                             <FormItem>
-                                <FormLabel required>Email</FormLabel>
+                                <FormLabel required>Enter your email</FormLabel>
                                 <FormControl>
                                     <Input
                                         placeholder="steve@woz.com"
@@ -77,7 +81,7 @@ export default function LoginForm() {
                         name="password"
                         render={({ field, fieldState }) => (
                             <FormItem>
-                                <FormLabel required>Password</FormLabel>
+                                <FormLabel required>New Password (+8 characters)</FormLabel>
                                 <FormControl>
                                     <Input
                                         placeholder="••••••••"
@@ -92,6 +96,17 @@ export default function LoginForm() {
                         )}
                     />
 
+                    <FormField
+                        control={form.control}
+                        name="terms"
+                        render={({ field, fieldState }) => (
+                            <TermsCheckbox
+                                field={field}
+                                fieldState={fieldState}
+                            />
+                        )}
+                    />
+
                     <FormError message={error} />
                     <FormSuccess message={success} />
 
@@ -100,7 +115,7 @@ export default function LoginForm() {
                         className="text-lg px-6 font-[500] bg-text-gradient text-neutral-50 shadow-none"
                         disabled={isPending}
                     >
-                        Login
+                        Create my account
                     </Button>
                 </form>
             </Form>

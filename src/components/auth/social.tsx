@@ -15,15 +15,15 @@ export const Social = () => {
                         console.log("clicked");
                     }}
                 ><FcGoogle /> Use Google </Button>
-                {/* <Button 
-                className="w-fit px-4 hover:bg-neutral-200" 
-                variant="outline"
-                onClick={() => {
+                <Button
+                    className="w-fit px-4 hover:bg-neutral-200"
+                    variant="outline"
+                    onClick={() => {
                         console.log("clicked");
                     }}
-                ><FaApple /></Button> */}
+                ><FaApple /></Button>
             </div>
-            <div className="flex items-center gap-2 py-4">
+            <div className="flex items-center gap-2 ">
                 <div className="h-[1px] w-full bg-neutral-500"></div>
                 <span className="text-neutral-500">Or</span>
                 <div className="h-[1px] w-full bg-neutral-500"></div>
